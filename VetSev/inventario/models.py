@@ -22,10 +22,6 @@ class Cliente(models.Model):
     telefono = models.CharField(max_length=14)
     direccion = models.CharField(max_length=100)
 
-class Mascota(models.Model):
-    cliente = models.ForeignKey(Cliente)
-    nombre = models.CharField(max_length=100)
-
 class Caja(models.Model):
     monto = models.IntegerField(default=0)
     saldo = models.IntegerField(default=0)
@@ -38,50 +34,26 @@ class Tipo_Turno(models.Model):
     tipo = models.CharField(max_length=30,required=True,primary_key=True)
 
 class Observacion(models.Model):
-
     Descripcion = models.CharField(max_length=300)
     fecha = models.DateTimeField()
     caja = models.ForeignKey(Caja)
-
-class Consulta(models.Model):
-    monto = models.IntegerField(default=7500)
-    fecha = models.DateTimeField()
-    ingreso = models.ForeignKey(Ingreso)
-    mascota = models.ForeignKey(Mascota)
 
 class Venta(models.Model):
     cantidad = models.IntegerField(default=1)
     item = models.ForeignKey(Item)
     ingreso = models.ForeignKey(Ingreso)
 
-class Pago_Hotel(models.Model):
-    dias = models.IntegerField(default=1)
-    hotel = models.ForeignKey(Hotel)
-    ingreso = models.ForeignKey(Ingreso)
-
-class Procedimiento(models.Model):
-    descripcion = models.CharField(max_length=150)
-    veterinario = models.ForeignKey(Veterinario)
-    ingreso = models.ForeignKey(Ingreso)
-
-class Pago_Peluquería(models.Model):
-    ingreso = models.ForeignKey(Ingreso)
-    trabajador = models.ForeignKey(Trabajador)
-
-class Cuotas(models.Model):
-    ingreso = models.ForeignKey(Ingreso)
-
-class Suscripcion(models.Model):
-    ingreso = models.ForeignKey(Ingreso)
-
-class Pago_Hospital(models.Model):
-    ingreso = models.ForeignKey(Ingreso)
-    veterinario = models.ForeignKey(Trabajador)
-
-class Cirugia(models.Model):
-    ingreso = models.ForeignKey(Ingreso)
-    veterinario = models.ForeignKey(Trabajador)
-
 class Trabajador(models.Model):
     nombre = models.CharField(max_length=50)
     rut = models.CharField(max_length=12,primary_key=True)
+    telefono = models.CharField(max_length=12)
+
+class Cargo(models.Model):
+    nombre = models.CharField(max_length=10, default="Veterinario")
+
+class Horario(models.Model):
+    dia = models.CharField()
+    hora_inicio = models.IntegerField()
+    hora_salida = models.IntegerField()
+    trabajador = models.ForeignKey(Trabajador)
+
