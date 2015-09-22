@@ -57,3 +57,57 @@ class Horario(models.Model):
     hora_salida = models.IntegerField()
     trabajador = models.ForeignKey(Trabajador)
 
+class Pago_Sueldos(models.Model):
+    descripcion = models.CharField(max_length=100)
+    trabajador = models.ForeignKey(Trabajador)
+    monto = models.IntegerField(default=0)
+    fecha = models.DateTimeField()
+
+class Compra_A_Proveedor(models.Model):
+    item = models.ForeignKey(Item_Ventas)
+    cantidad = models.IntegerField(default=1)
+    costo = models.IntegerField(default=0)
+    fecha = models.DateTimeField()
+
+class Egreso_Productos(models.Model):
+    item = models.ForeignKey(Item_Ventas)
+    motivo = models.CharField(max_length=100)
+    fecha = models.DateTimeField()
+
+class Pago_Cuentas(models.Model):
+    tipo = models.ForeignKey(Tipo_Cuenta)
+    descripción = models.CharField(max_length=100)
+    monto = models.IntegerField(default=0)
+    fecha = models.DateTimeField()
+
+class Tipo_Cuenta(models.Model):
+    tipo = models.CharField(max_length=40)
+
+class Compra_Inmueble(models.Model):
+    item = models.ForeignKey(Item_Inmueble)
+    cantidad = models.IntegerField()
+    costo = models.IntegerField()
+    fecha = models.DateTimeField()
+
+class Item_Ventas(models.Model):
+    tipo = models.ForeignKey(Tipo_Item)
+    descripcion = models.CharField(max_length=100)
+    valor_venta = models.IntegerField(default=0)
+
+class Tipo_Item(models.Model):
+    tipo = models.CharField(max_length=40)
+
+class Inventario_Producto(models.Model):
+    item = models.ForeignKey(Item_Ventas)
+    cantidad = models.IntegerField(default=1)
+    ultima_mod = models.DateTimeField()
+
+class Item_Inmueble(models.Model):
+    descripcion = models.Charfield(max_length=200)
+    costo = models.IntegerField(default=0)
+
+class Inventario_Inmueble(models.Model):
+    item = models.ForeignKey(Item_Inmueble)
+    cantidad = models.IntegerField(default=1)
+    ultima_mod = models.DateTimeField()
+
