@@ -77,15 +77,18 @@ class Observacion(models.Model):
     caja = models.ForeignKey(Caja)
 
 
-class Labor(models.Model):
-    nombre = models.CharField(max_length=10)
-
-
 class Trabajador(models.Model):
+    LABOR_CHOICES =(
+        ('Peluquera', 'Peluquera'),
+        ('Secretaria', 'Secretaria'),
+        ('Veterinaro', 'Veterinario'),
+        ('Auxiliar', 'Auxiliar'),
+    )
     nombre = models.CharField(max_length=50)
-    labor = models.ForeignKey(Labor)
+    labor = models.CharField(max_length=20,choices=LABOR_CHOICES)
     rut = models.CharField(max_length=12,primary_key=True)
     telefono = models.CharField(max_length=12)
+    sueldo = models.IntegerField(default=0,blank=True)
 
 
 class Horario(models.Model):
