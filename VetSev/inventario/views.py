@@ -1,3 +1,8 @@
 from django.shortcuts import render
+from django.http import HttpResponse
+from django.http import Http404
+from django.shortcuts import render_to_response
 
-# Create your views here.
+
+def hogar(request):
+    return render_to_response('index.html')

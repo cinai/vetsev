@@ -3,10 +3,18 @@ from django.db import models
 from VetSev.inventario.models import Ingreso, Cliente, Trabajador
 
 
+ESTADO_PAGO_CHOICES = (
+    ('Pendiente','Pendiente'),
+    ('Parcial','Parcial'),
+    ('Pagado','Pagado'),
+)
+
+
 class Mascota(models.Model):
     cliente = models.ForeignKey(Cliente)
     nombre = models.CharField(max_length=100)
     fecha_nacimiento = models.DateField()
+    color = models.CharField(max_length=20)
 
 
 class Consulta(models.Model):
@@ -106,6 +114,7 @@ class Hospitalizacion:
     trabajador = models.ForeignKey(Trabajador)
     diagnostico = models.CharField(max_length=150)
     estado = models.CharField(max_length=30,choices=ESTADO_CHOICES)
+    estado_pago = models.CharField(max_length=14,choices=ESTADO_PAGO_CHOICES)
     fecha_ingreso = models.DateTimeField(blank=True)
     fecha_retiro = models.DateTimeField(blank=True)
 
@@ -118,11 +127,6 @@ class Ficha_Hospital:
 #TODO: arreglar estado_pago choices
 class Peluqueria:
     ESTADO_CHOICES = (
-        ('Reservado','Reservado'),
-        ('Alojado','Alojado'),
-        ('Retirado','Retirado'),
-    )
-    ESTADO_PAGO_CHOICES = (
         ('Reservado','Reservado'),
         ('Alojado','Alojado'),
         ('Retirado','Retirado'),
