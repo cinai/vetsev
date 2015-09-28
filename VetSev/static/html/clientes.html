@@ -1,0 +1,51 @@
+
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li><a href="#">Caja</a></li>
+            <li class="active"><a href="#">Clientes <span class="sr-only">(current)</span></a></li>
+            <li><a href="#">Mascotas</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="">Atención Clínica</a></li>
+            <li><a href="">Hospital</a></li>
+            <li><a href="">Peluquería</a></li>
+            <li><a href="">Hotel</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="">Inventario</a></li>
+            <li><a href="">Calendario</a></li>
+            <li><a href="">Horario</a></li>
+            <li><a href="">Finanzas</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Clientes</h1>
+          <div class="row placeholders">
+            <div class="col-xs-6 col-sm-3">
+              <img src="{% static "dist/fonts/newuser.png"%}" class="img-responsive center-block" style="height:100px">
+              <h4>Ingresar Nuevo Cliente</h4>
+              <span class="text-muted">Ingresar un nuevo cliente, ya sea un cliente normal o uno suscrito.</span>
+            </div>
+            <div class="col-xs-6 col-sm-3">
+              <img src="{% static "dist/fonts/gold_user.png"%}" class="img-responsive center-block" style="height:100px">
+              <h4>Suscribir Cliente</h4>
+              <span class="text-muted">Suscribir cliente ingresado previamente.</span>
+            </div>
+            <div class="col-xs-6 col-sm-3">
+              <img src="{% static "dist/fonts/edit_user.png"%}" class="img-responsive center-block" style="height:100px">
+              <h4>Modificar Datos de Cliente</h4>
+              <span class="text-muted">Modificar los datos de un cliente ingresado previamente.</span>
+            </div>
+          </div>
+
+          <h2 class="sub-header">
+            <img src="{% static "dist/fonts/buscador.png"%}" class="img-responsive center-block" style="height:30px; float:left">
+            &nbsp;Buscar Cliente
+          </h2>
+          <div class="table-responsive">
+            <table id ="example" class="display table table-striped">
+            </table>
+          </div>
+        </div>
+      </div>
