@@ -1,9 +1,11 @@
 
+{% load staticfiles %}
+    <div id="contenido_principal" class="container-fluid">
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li><a href="#">Caja</a></li>
-            <li class="active"><a href="#">Clientes <span class="sr-only">(current)</span></a></li>
+            <li><a href="/caja">Caja</a></li>
+            <li class="active"><a href="/clientes">Clientes<span class="sr-only">(current)</span></a></li>
             <li><a href="#">Mascotas</a></li>
           </ul>
           <ul class="nav nav-sidebar">
@@ -23,22 +25,27 @@
           <h1 class="page-header">Clientes</h1>
           <div class="row placeholders">
             <div class="col-xs-6 col-sm-3">
+              <a href="/clientes/nuevo_cliente">
               <img src="{% static "dist/fonts/newuser.png"%}" class="img-responsive center-block" style="height:100px">
               <h4>Ingresar Nuevo Cliente</h4>
+              </a>
               <span class="text-muted">Ingresar un nuevo cliente, ya sea un cliente normal o uno suscrito.</span>
             </div>
             <div class="col-xs-6 col-sm-3">
-              <img src="{% static "dist/fonts/gold_user.png"%}" class="img-responsive center-block" style="height:100px">
-              <h4>Suscribir Cliente</h4>
+              <a href="/clientes/suscribir_cliente">
+                <img src="{% static "dist/fonts/gold_user.png"%}" class="img-responsive center-block" style="height:100px">
+                <h4>Suscribir Cliente</h4>
+              </a>
               <span class="text-muted">Suscribir cliente ingresado previamente.</span>
             </div>
             <div class="col-xs-6 col-sm-3">
-              <img src="{% static "dist/fonts/edit_user.png"%}" class="img-responsive center-block" style="height:100px">
-              <h4>Modificar Datos de Cliente</h4>
+              <a href="/clientes/modificar_cliente">
+                <img src="{% static "dist/fonts/edit_user.png"%}" class="img-responsive center-block" style="height:100px">
+                <h4>Modificar Datos de Cliente</h4>
+              </a>
               <span class="text-muted">Modificar los datos de un cliente ingresado previamente.</span>
             </div>
           </div>
-
           <h2 class="sub-header">
             <img src="{% static "dist/fonts/buscador.png"%}" class="img-responsive center-block" style="height:30px; float:left">
             &nbsp;Buscar Cliente
@@ -49,3 +56,59 @@
           </div>
         </div>
       </div>
+    </div>
+     <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="{% static "dist/js/jquery-1.11.3.min.js" %}"></script>
+    <script src="{% static "dist/js/bootstrap.min.js" %}"></script>
+
+    <script src="{% static "dist/js/jquery.dataTables.min.js" %}"></script>
+    <script type="text/javascript">
+      var dataSet = [
+          [ "Suki Burks", "Developer", "London", "6832", "2009/10/22", "$114,500" ],
+          [ "Prescott Bartlett", "Technical Author", "London", "3606", "2011/05/07", "$145,000" ],
+          [ "Gavin Cortez", "Team Leader", "San Francisco", "2860", "2008/10/26", "$235,500" ],
+          [ "Martena Mccray", "Post-Sales support", "Edinburgh", "8240", "2011/03/09", "$324,050" ],
+          [ "Unity Butler", "Marketing Designer", "San Francisco", "5384", "2009/12/09", "$85,675" ]
+      ];
+       
+      $(document).ready(function() {
+          $('#example').DataTable( {
+              data: dataSet,
+              columns: [
+                  { title: "Nombre" },
+                  { title: "Suscrito" },
+                  { title: "Teléfono" },
+                  { title: "Dirección" },
+                  { title: "Mascotas." },
+                  { title: "Fecha de Ingreso" }
+              ],
+              language: 
+              {
+                "sProcessing":     "Procesando...",
+                "sLengthMenu":     "Mostrar _MENU_ registros",
+                "sZeroRecords":    "No se encontraron resultados",
+                "sEmptyTable":     "Ningún dato disponible en esta tabla",
+                "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix":    "",
+                "sSearch":         "Buscar:",
+                "sUrl":            "",
+                "sInfoThousands":  ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                  "sFirst":    "Primero",
+                  "sLast":     "Último",
+                  "sNext":     "Siguiente",
+                  "sPrevious": "Anterior"
+                },
+                "oAria": {
+                  "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                  "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+              }
+          } );
+      } );  
+    </script>

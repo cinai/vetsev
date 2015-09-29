@@ -15,9 +15,15 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from inventario import views
+from inventario import views as i_views
+from clinica import views as c_views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^', views.hogar, name='home'),
+    url(r'^clientes/nuevo_cliente', c_views.nuevo_cliente, name='nuevo_cliente'),
+    url(r'^clientes/suscribir_cliente', c_views.suscribir_cliente, name='suscribir_cliente'),
+    url(r'^clientes/modificar_cliente', c_views.modificar_cliente, name='modificar_cliente'),
+    url(r'^clientes', c_views.clientes, name='clientes'),
+    url(r'^', i_views.hogar, name='home'),
+
 ]

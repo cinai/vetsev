@@ -107,6 +107,7 @@ STATICFILES_DIRS = (
 STATIC_URL = '/static/'
 
 TEMPLATE_PATH = os.path.join(BASE_DIR, 'static',  'html')
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
