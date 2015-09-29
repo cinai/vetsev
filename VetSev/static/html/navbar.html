@@ -1,0 +1,27 @@
+{% load staticfiles %}
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Veterinaria Sevilla</a>
+
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#"><img src="{% static "dist/fonts/calendar.png"%}" style="height:30px"> Calendario</a></li>
+            <li><a href="#"><img src="{% static "dist/fonts/telefono.png"%}" style="height:30px"> Contactar</a></li>
+            <li><a href="#"><img src="{% static "dist/fonts/finanzas.png"%}" style="height:30px"> Finanzas</a></li>
+            <li><a href="#"><img src="{% static "dist/fonts/ayuda.png"%}" style="height:30px"> Ayuda</a></li>
+          </ul>
+          <!--<form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="Search...">
+          </form>-->
+        </div>
+      </div>
+    </nav>
