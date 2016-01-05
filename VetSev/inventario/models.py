@@ -1,6 +1,13 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from clinica.models import Mascota 
+from django.utils import timezone
 
+ESTADO_PAGO_CHOICES = (
+    ('Pendiente','Pendiente'),
+    ('Parcial','Parcial'),
+    ('Pagado','Pagado'),
+)
 
 class Item_Productos(models.Model):
     TIPO_ITEM_CHOICES = (
@@ -37,21 +44,46 @@ class Caja(models.Model):
         ('Mañana', 'Mañana'),
         ('Tarde', 'Tarde'),
     )
-    monto = models.IntegerField(default=0)
-    saldo = models.IntegerField(default=0)
-    entregaDoc = models.IntegerField(default=0,blank=True)
+    monto = models.IntegerField(default=0,blank=True) #corresponde a la suma de todos los ingresos menos los egresos
+    saldo = models.IntegerField(default=0,blank=True) #corresponde a lo que queda para la proxima caja
+    entregaDoc = models.IntegerField(default=0,blank=True) #corresponde a lo que se retira en efectivo
     tipo_turno = models.CharField(max_length=6,choices=TIPO_TURNO_CHOICES)
     fechaCreacion = models.DateTimeField()
-    fechaCierre = models.DateTimeField()
-    revisado = models.BooleanField(blank=True,default=False)
+    fechaCierre = models.DateTimeField(null=True,blank=True)
+    revisado = models.BooleanField(blank=True,default=False) #corresponde si fue revisado por los admin
 
+    def __str__(self):
+        return self.tipo_turno+ " N°: "+ str(self.id)
 
 class Cliente(models.Model):
     nombre = models.CharField(max_length=40)
     rut = models.CharField(max_length=12)
     telefono = models.CharField(max_length=14)
+    telefono2 = models.CharField(max_length=14,blank=True,null=True)
     direccion = models.CharField(max_length=100)
+    comuna = models.CharField(max_length=40,default="Temuco")
+    mail = models.EmailField(max_length=254,blank=True,null=True)
+    fecha_ingreso = models.DateField()
 
+    def __str__(self):
+        return self.nombre
+
+    def save(self, *args, **kwargs):
+        ''' On save, update timestamps '''
+        if not self.id:
+            self.fecha_ingreso = timezone.now()
+        return super(Cliente, self).save(*args, **kwargs)
+
+    def obtener_mascotas(self):
+        mascotas = Mascota.objects.filter(cliente=self.pk)
+        return mascotas
+
+    def suscrito(self):
+        n_mascotas = Mascota.objects.filter(cliente=self.pk).count()
+        n_mascotas_suscritas = Mascota.objects.filter(cliente=self.pk,suscrito=True).count()
+        if n_mascotas == n_mascotas_suscritas:
+            return True
+        return False
 
 # Tipo_Pago es solo chars, la idea es hacer un formulario para cada uno
 # bassado en un modelo
@@ -61,15 +93,17 @@ class Ingreso(models.Model):
         ('RedCompra', 'RedCompra'),
         ('Cheque', 'Cheque'),
     )
-    descripcion = models.CharField(max_length=200)
-    cantidad = models.CharField(max_length=200)
+    descripcion = models.CharField(max_length=200,blank=True,null=True)
     fecha = models.DateTimeField()
-    n_boleta = models.IntegerField(default=0)
-    tipo_pago =models.CharField(max_length=15,choices=TIPO_PAGO_CHOICES)
-    n_cheque = models.IntegerField(default=0,blank=True)
+    n_boleta = models.IntegerField(default=0,blank=True,null=True)
+    tipo_pago =models.CharField(max_length=15,choices=TIPO_PAGO_CHOICES,default='Efectivo',null=True)
+    n_cheque = models.IntegerField(default=0,blank=True, null=True)
     caja = models.ForeignKey(Caja)
-    cliente = models.ForeignKey(Cliente)
+    cliente = models.ForeignKey('Cliente',null=True,blank=True)
+    estado = models.CharField(max_length=20,choices=ESTADO_PAGO_CHOICES,default='Pendiente',null=True)
 
+    def __str__(self):
+        return "Ingreso "+str(self.pk)
 
 class Observacion(models.Model):
     Descripcion = models.CharField(max_length=300)
@@ -89,6 +123,9 @@ class Trabajador(models.Model):
     rut = models.CharField(max_length=12,primary_key=True)
     telefono = models.CharField(max_length=12)
     sueldo = models.IntegerField(default=0,blank=True)
+
+    def __str__(self):
+        return self.nombre
 
 
 class Horario(models.Model):

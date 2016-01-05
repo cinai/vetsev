@@ -38,7 +38,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'inventario'
+    'inventario',
+    'clinica', 
 )
 
 MIDDLEWARE_CLASSES = (
@@ -107,11 +108,17 @@ STATICFILES_DIRS = (
 STATIC_URL = '/static/'
 
 TEMPLATE_PATH = os.path.join(BASE_DIR, 'static',  'html')
+CLINICA_PATH = os.path.join(TEMPLATE_PATH,'clinica')
+INVENTARIO_PATH = os.path.join(TEMPLATE_PATH,'inventario')
+CAJA_PATH = os.path.join(INVENTARIO_PATH,'caja')
+CLIENTES_PATH = os.path.join(INVENTARIO_PATH,'clientes')
+
+
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATE_PATH],
+        'DIRS': [TEMPLATE_PATH, CLINICA_PATH, INVENTARIO_PATH, CAJA_PATH, CLIENTES_PATH],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

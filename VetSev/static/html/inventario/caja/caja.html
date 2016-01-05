@@ -1,0 +1,190 @@
+{% load staticfiles %}
+    <div id="contenido_principal" class="container-fluid">
+      <div class="row">  
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active"><a href="#">Caja <span class="sr-only">(current)</span></a></li>
+            <li><a href="/clientes">Clientes</a></li>
+            <li><a href="/mascotas">Mascotas</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="">Atención Clínica</a></li>
+            <li><a href="">Hospital</a></li>
+            <li><a href="">Peluquería</a></li>
+            <li><a href="">Hotel</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="">Inventario</a></li>
+            <li><a href="">Calendario</a></li>
+            <li><a href="">Horario</a></li>
+            <li><a href="">Finanzas</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <div class="row">
+            <div class="col-xs-6 col-sm-6"><h1 class="page-header">Caja </h1></div>
+            <div class="col-xs-6 col-sm-6" style="text-align:right;">
+              <h4>11/11/2015 Turno de Mañana</h4>
+              <p><strong>Saldo inicial:</strong> xxxxx</p>
+              <p><strong>Entrega Doc:</strong> xxxxx</p>
+            </div>
+          </div>
+          <ul class="nav nav-tabs" role="tablist">
+            <li id ="tab_ingreso" role="presentation" class="active"><a href="#tabla_ingresos" role="tab" data-toggle="tab">Ingresos</a></li>
+            <li id ="tab_pendiente" role="presentation" ><a href="#tabla_pendientes" role="tab" data-toggle="tab">Ingresos Pendientes</a></li>
+            <li id ="tab_egreso" role="presentation"><a href="#tabla_egresos" role="tab" data-toggle="tab">Egresos</a></li>
+            <li id ="tab_obs" role="presentation"><a href="#tabla_obs" role="tab" data-toggle="tab">Observaciones</a></li>
+          </ul>
+          <div class="tab-content">
+            <div id="tabla_ingresos" role="tabpanel" class="tab-pane fade in active table-responsive">
+              <table id ="example" class="display table">
+                <thead>
+                  <tr>
+                    <th style="width:40px">#</th>
+                    <th style="width:180px">Descripción</th>
+                    <th>Hora</th>
+                    <th>N° Boleta</th>
+                    <th>Tipo de Pago</th>
+                    <th>Cliente</th>
+                    <th>Monto Total</th>
+                    <th>Estado</th>
+                    <th>Ver Detalle</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for ingreso in ingresos %}
+                    <tr >
+                      <td style="width:40px"><a href="/caja/ingreso?id={{ ingreso.id }}"> {{ forloop.revcounter }}</a></td>
+                      <td style="width:180px">
+                        {{ ingreso.descripcion }}
+                      </td>
+                      <td> {{ ingreso.get_hora }}</td>
+                      <td> {{ ingreso.n_boleta }}</td>
+                      <td>{{ ingreso.tipo_pago }}</td>
+                      <td> {{ ingreso.cliente }} </td>
+                      <td> {{ ingreso.get_monto_total}}</td>
+                      <td> {{ ingreso.estado }}</td>
+                      <td> <a href="/caja/ingreso?id={{ ingreso.id }}"> <button class="btn btn-sm btn-success">Ver Detalle</button></a></td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+            <div id="tabla_pendientes" role="tabpanel" class="tab-pane fade table-responsive">
+              <table id ="example" class="display table">
+                <thead>
+                  <tr>
+                    <th style="width:40px">#</th>
+                    <th style="width:180px">Descripción</th>
+                    <th>Hora</th>
+                    <th>N° Boleta</th>
+                    <th>Tipo de Pago</th>
+                    <th>Cliente</th>
+                    <th>Monto Total</th>
+                    <th>Estado</th>
+                    <th>Ver Detalle</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for ingreso in ingresos %}
+                    {% if ingreso.estado = 'Pendiente'%}
+                    <tr >
+                      <td style="width:40px"><a href="/caja/ingreso?id={{ ingreso.id }}"> {{ forloop.revcounter }}</a></td>
+                      <td style="width:180px">
+                        {{ ingreso.descripcion }}
+                      </td>
+                      <td> {{ ingreso.get_hora }}</td>
+                      <td> {{ ingreso.n_boleta }}</td>
+                      <td>{{ ingreso.tipo_pago }}</td>
+                      <td> {{ ingreso.cliente }} </td>
+                      <td> {{ ingreso.get_monto_total}}</td>
+                      <td> {{ ingreso.estado }}</td>
+                      <td> <a href="/caja/ingreso?id={{ ingreso.id }}"> <button class="btn btn-sm btn-success">Ver Detalle</button></a></td>
+                    </tr>
+                    {% endif %}
+
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+            <div id="tabla_egresos" role="tabpanel" class="tab-pane fade table-responsive">
+              <table id ="example" class="display table">
+                <thead>
+                  <tr>
+                    <th style="width:40px">#</th>
+                    <th style="width:180px">Descripción</th>
+                    <th>Hora</th>
+                    <th>N° Boleta</th>
+                    <th>Tipo de Pago</th>
+                    <th>Cliente</th>
+                    <th>Monto Total</th>
+                    <th>Estado</th>
+                    <th>Ver Detalle</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for egreso in egresos %}
+                    <tr >
+                      <td style="width:40px"><a href="/caja/ingreso?id={{ ingreso.id }}"> {{ forloop.revcounter }}</a></td>
+                      <td style="width:180px">
+                        {{ ingreso.descripcion }}
+                      </td>
+                      <td> {{ ingreso.get_hora }}</td>
+                      <td> {{ ingreso.n_boleta }}</td>
+                      <td>{{ ingreso.tipo_pago }}</td>
+                      <td> {{ ingreso.cliente }} </td>
+                      <td> {{ ingreso.get_monto_total}}</td>
+                      <td> {{ ingreso.estado }}</td>
+                      <td> <a href="/caja/ingreso?id={{ ingreso.id }}"> <button class="btn btn-sm btn-success">Ver Detalle</button></a></td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+            <div id="tabla_obs" role="tabpanel" class="tab-pane fade table-responsive">
+              <table id ="example" class="display table">
+                <thead>
+                  <tr>
+                    <th style="width:40px">#</th>
+                    <th style="width:180px">Descripción</th>
+                    <th>Hora</th>
+                    <th>N° Boleta</th>
+                    <th>Tipo de Pago</th>
+                    <th>Cliente</th>
+                    <th>Monto Total</th>
+                    <th>Estado</th>
+                    <th>Ver Detalle</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for obs in observaciones %}
+                    <tr >
+                      <td style="width:40px"><a href="/caja/ingreso?id={{ ingreso.id }}"> {{ forloop.revcounter }}</a></td>
+                      <td style="width:180px">
+                        {{ ingreso.descripcion }}
+                      </td>
+                      <td> {{ ingreso.get_hora }}</td>
+                      <td> {{ ingreso.n_boleta }}</td>
+                      <td>{{ ingreso.tipo_pago }}</td>
+                      <td> {{ ingreso.cliente }} </td>
+                      <td> {{ ingreso.get_monto_total}}</td>
+                      <td> {{ ingreso.estado }}</td>
+                      <td> <a href="/caja/ingreso?id={{ ingreso.id }}"> <button class="btn btn-sm btn-success">Ver Detalle</button></a></td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+     <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="{% static "dist/js/jquery-1.11.3.min.js" %}"></script>
+    <script src="{% static "dist/js/bootstrap.min.js" %}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+        });
+    </script>

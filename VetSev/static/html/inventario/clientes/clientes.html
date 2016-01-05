@@ -1,0 +1,128 @@
+
+{% load staticfiles %}
+		<div id="contenido_principal" class="container-fluid">
+			<div class="row">
+				<div class="col-sm-3 col-md-2 sidebar">
+					<ul class="nav nav-sidebar">
+						<li><a href="/caja">Caja</a></li>
+						<li class="active"><a href="/clientes">Clientes<span class="sr-only">(current)</span></a></li>
+						<li><a href="/mascotas">Mascotas</a></li>
+					</ul>
+					<ul class="nav nav-sidebar">
+						<li><a href="">Atención Clínica</a></li>
+						<li><a href="">Hospital</a></li>
+						<li><a href="">Peluquería</a></li>
+						<li><a href="">Hotel</a></li>
+					</ul>
+					<ul class="nav nav-sidebar">
+						<li><a href="">Inventario</a></li>
+						<li><a href="">Calendario</a></li>
+						<li><a href="">Horario</a></li>
+						<li><a href="">Finanzas</a></li>
+					</ul>
+				</div>
+				<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+					<div class="col-xs-6 col-sm-6" style="float=left"><h1 class="">Clientes</h1> <hr/></div>
+					<div class="col-xs-4 col-sm-4"></div>
+					<div class="col-xs-2 col-sm-2" style="text-align:center; float=right">
+						<a href="/clientes/nuevo_cliente">
+							<img src="{% static "dist/fonts/newuser.png"%}" class="img-responsive center-block" style="height:80px">
+							<h4 style="text-align:center;">Ingresar Nuevo Cliente</h4>
+						</a>
+					</div>
+						<h2 class="sub-header">
+							<img src="{% static "dist/fonts/buscador.png"%}" class="img-responsive center-block" style="height:30px; float:left">
+							&nbsp;Buscar Cliente
+						</h2>
+					<div class="col-xs-12 col-sm-12">
+						<div class="table-responsive">
+							<table id ="tabla_clientes" class="display table table-striped">
+								<thead>
+									<tr>
+										<th style="width:40px">Id</th>
+										<th style="width:70px">Suscrito</th>
+										<th>Rut</th>
+										<th>Nombre</th>
+										<th>Teléfono 1</th>
+										<th>Mascotas</th>
+										<th>Acciones</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for cliente in clientes %}
+										<tr>
+											<td style="width:40px"><a href="/clientes/info_cliente?id={{ cliente.id }}"> {{ cliente.id }}</a></td>
+											<td style="width:70px">
+											{% if cliente.suscrito != False %}
+												<img src="{% static "dist/fonts/gold_user.png"%}" class="img-responsive center-block" style="height:30px">
+											{% endif %}
+											</td>
+											<td><a href="/clientes/info_cliente?id={{ cliente.id }}"> {{ cliente.rut }} </a></td>
+											<td><a href="/clientes/info_cliente?id={{ cliente.id }}"> {{ cliente.nombre }}</a></td>
+											<td>{{ cliente.telefono }}</td>
+											<td> 
+													{% for mascota in cliente.obtener_mascotas %}
+													<a href="/mascotas/info_mascota?id={{ mascota.id }}">{{ mascota.nombre }} </a> &nbsp;
+													{% endfor %}
+											</td>
+											<td style="display: inline-flex;">
+											<a href=""><img src="{% static "dist/fonts/kuser.png"%}" class="img-responsive center-block" style="height:30px" title="Modificar información de cliente"> </a> &nbsp;
+											<a href="/clientes/nueva_mascota?id={{ cliente.id }}"><img src="{% static "dist/fonts/Blue_paw_add.png"%}" class="img-responsive center-block" style="height:30px" title="Agregar mascota"></a>
+											</td>
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div> 
+				</div>
+			</div>
+		</div>
+		 <!-- Bootstrap core JavaScript
+		================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script src="{% static "dist/js/jquery-1.11.3.min.js" %}"></script>
+		<script src="{% static "dist/js/bootstrap.min.js" %}"></script>
+
+		<script src="{% static "dist/js/jquery.dataTables.min.js" %}"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+					$('#tabla_clientes').DataTable( {
+							autoWidth: false,
+								columns: [
+									{"width": "5%"},
+									{"width": "5%"},
+									{"width": "15%"},
+									{"width": "25%"},
+									{"width": "15%"},
+									{"width": "20%"},
+									{"width": "15%"}
+								],
+							language: 
+							{
+								"sProcessing":     "Procesando...",
+								"sLengthMenu":     "Mostrar _MENU_ registros",
+								"sZeroRecords":    "No se encontraron resultados",
+								"sEmptyTable":     "Ningún dato disponible en esta tabla",
+								"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+								"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+								"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+								"sInfoPostFix":    "",
+								"sSearch":         "Buscar:",
+								"sUrl":            "",
+								"sInfoThousands":  ",",
+								"sLoadingRecords": "Cargando...",
+								"oPaginate": {
+									"sFirst":    "Primero",
+									"sLast":     "Último",
+									"sNext":     "Siguiente",
+									"sPrevious": "Anterior"
+								},
+								"oAria": {
+									"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+									"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+								}
+							}
+					} );
+			} );  
+		</script>

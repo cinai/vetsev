@@ -20,10 +20,15 @@ from clinica import views as c_views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^clientes/nuevo_cliente', c_views.nuevo_cliente, name='nuevo_cliente'),
-    url(r'^clientes/suscribir_cliente', c_views.suscribir_cliente, name='suscribir_cliente'),
-    url(r'^clientes/modificar_cliente', c_views.modificar_cliente, name='modificar_cliente'),
-    url(r'^clientes', c_views.clientes, name='clientes'),
+    url(r'^clientes/info_cliente', i_views.info_cliente, name='info_cliente'),
+    url(r'^clientes/nuevo_cliente', i_views.nuevo_cliente, name='nuevo_cliente'),
+    url(r'^clientes/nueva_mascota', c_views.nueva_mascota, name='nueva_mascota'),
+    url(r'^clientes/modificar_cliente', i_views.modificar_cliente, name='modificar_cliente'),
+    url(r'^clientes', i_views.clientes, name='clientes'),
+    url(r'^mascotas/info_mascota', c_views.mascota, name='mascotas'),
+    url(r'^mascotas/ingresar_consulta', c_views.ingresar_consulta, name='ingresar_consulta'),
+    url(r'^mascotas/suscribir', c_views.suscribir_mascota, name='suscribir'),
+    url(r'^mascotas', c_views.mascotas, name='mascotas'),
     url(r'^', i_views.hogar, name='home'),
 
 ]

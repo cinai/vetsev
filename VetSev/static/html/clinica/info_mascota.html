@@ -1,0 +1,291 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Veterinaria Sevilla</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static "dist/css/bootstrap.min.css" %}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="{% static "css/dashboard.css" %}" rel="stylesheet">
+    <link href="{% static "dist/css/jquery.dataTables.min.css" %}" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    {% include navbar %}
+    
+    <div id="contenido_principal" class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li><a href="/caja">Caja</a></li>
+            <li ><a href="/clientes">Clientes</a></li>
+            <li class="active"><a href="/mascotas">Mascotas <span class="sr-only">(current)</span></a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="">Atención Clínica</a></li>
+            <li><a href="">Hospital</a></li>
+            <li><a href="">Peluquería</a></li>
+            <li><a href="">Hotel</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="">Inventario</a></li>
+            <li><a href="">Calendario</a></li>
+            <li><a href="">Horario</a></li>
+            <li><a href="">Finanzas</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <div style="display: inline-flex; align-items:flex-end">
+            {% if mascota.suscrito == False %}
+              <img src="{% static "dist/fonts/perrogato.png"%}" class="img-responsive center-block" style="height:80px;">
+            {% else %}
+              <img src="{% static "dist/fonts/perrogato_dorado.png"%}" class="img-responsive center-block" style="height:80px;">
+            {% endif %}
+            <h1 class="page-header" style="display: inline-table; margin-bottom:0px"> &nbsp; Datos de la Mascota</h1>
+          </div>
+          <div class="col-sm-9 col-md-10 main" style="float:left">
+            <table>
+              <tbody>
+                <tr>
+                  <td>
+                    <ul>
+                    <li><label for="nombre">Nombre:</label>
+                    {{ mascota.nombre }}</li>
+                    <li><label for="propietario">Propietario:</label>
+                    {{ mascota.cliente }}</li>
+                    <li><label for="fecha_nac">Fecha de Nacimiento:</label>
+                    {{ mascota.fecha_nacimiento }}</li>
+                    <li><label for="especie">Especie:</label>
+                    {{ mascota.especie }}</li>
+                    <li><label for="raza">Raza:</label>
+                    {{ mascota.raza }}</li>
+                    </ul>
+                  </td>
+                  <td>
+                    <ul>
+                    <li><label for="color">Color:</label>
+                    {{ mascota.color }}</li>
+                    <li><label for="sexo">Sexo:</label>
+                    {{ mascota.sexo }}</li>
+                    <li><label for="fecha_ing">Fecha de ingreso:</label>
+                    {{ mascota.fecha_ingreso }}</li>
+                    <li><label for="suscrito">Suscrito:</label>
+                    {% if mascota.suscrito == False %}
+                        No
+                    {% else %}
+                        Sí 
+                    {% endif %}
+                    </li>
+                    <li><label for="suscrito">Última Atención:</label>
+                    {{ mascota.obtener_ultima_at }}</li>
+                    </ul>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="row">
+
+          </div>
+          <h2 class="sub-header">
+            &nbsp; Acciones
+          </h2>
+          <div >
+            {% if mascota.suscrito == False %}
+            <div class="col-xs-2 col-sm-2" style="text-align:center">
+              <a href="" ata-toggle="modal" data-target="#myModal" data-whatever="{{mascota.nombre}}" id="imsuscrito{{mascota.id}}" data-mascotaid ="{{mascota.id}}"><img src="{% static "dist/fonts/goldpaw.png"%}" class="img-responsive center-block" style="height:50px" title="Suscribir mascota"></a>
+              <h4 style="text-align:center;">Suscribir Mascota</h4>
+            </div>
+            {% endif %}
+            <div class="col-xs-2 col-sm-2 " style="text-align:center"><a href="" data-toggle="modal" data-target="#myModal2" data-whatever="{{mascota.nombre}}" id="imatencion{{mascota.id}}" data-mascotaid ="{{mascota.id}}"><img src="{% static "dist/fonts/vacuna.png"%}" class="img-responsive center-block" style="height:50px" title="Atención Clínica"> </a>
+            <h4 style="text-align:center;">Ingresar a Atención Clínica</h4>
+            </div>
+            <div class="col-xs-2 col-sm-2" style="text-align:center"><a href="" data-toggle="modal" data-target="#myModal3" data-whatever="{{mascota.nombre}}" id="imatencion{{mascota.id}}" data-mascotaid ="{{mascota.id}}"><img src="{% static "dist/fonts/hospital.png"%}" class="img-responsive  center-block" style="height:50px" title="Hospital"> </a>
+            <h4 style="text-align:center;">Ingresar a Hospital</h4>
+            </div>
+            <div class="col-xs-2 col-sm-2 " style="text-align:center"><a href="" data-toggle="modal" data-target="#myModal4" data-whatever="{{mascota.nombre}}" id="imatencion{{mascota.id}}" data-mascotaid ="{{mascota.id}}"><img src="{% static "dist/fonts/peluqueria.png"%}" class="img-responsive center-block" style="height:50px" title="Peluquería"> </a> 
+            <h4 style="text-align:center;">Ingresar a Peluquería o <br/> Reservar Hora</h4>
+            </div>
+            <div class="col-xs-2 col-sm-2" style="text-align:center">
+            <a href="" data-toggle="modal" data-target="#myModal5" data-whatever="{{mascota.nombre}}" id="imatencion{{mascota.id}}" data-mascotaid ="{{mascota.id}}"><img src="{% static "dist/fonts/hotel.png"%}" class="img-responsive center-block" style="height:50px" title="Hotel"> </a>
+            <h4 style="text-align:center;">Ingresar a Hotel o Reservar Hora</h4>
+            </div>
+          </div>
+          <div class="col-xs-9 col-sm-9" >
+            <h2 id="eventos" class="sub-header">
+              &nbsp; Eventos
+            </h2>
+              
+          </div>
+          <div class="col-xs-9 col-sm-9">
+          <h2  class="sub-header">
+            &nbsp; Observaciones
+          </h2>  
+          </div>
+        </div>
+      </div>
+    </div>
+        <!-- Modal 1-->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog modal-admin" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel"  style="text-align:center">
+            </h4>
+          </div>
+          <div class="modal-body">
+            Esto generará un pago de suscripción que se podrá cancelar en la sección caja.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            <button type="button" id="suscribir" class="btn btn-warning">Suscribir Mascota</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal 2-->
+    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog modal-admin" role="document">
+        <div class="modal-content">
+          <div class="modal-header" >
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" style="text-align:center" id="myModal2Label">
+            </h4>
+          </div>
+          <div class="modal-body">
+            Esto generará un pago de atención clínica que se podrá cancelar en la sección caja. &nbsp;
+            Por favor ingrese monto a pagar y veterinario que realizará la atención. 
+            <br/><br/>
+                <table>
+                  {{ consulta_form.as_table }}
+                </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            <button type="button" id="atender" class="btn btn-primary">Ingresar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+        <!-- Modal 3-->
+    <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog modal-admin" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title"  style="text-align:center" id="myModal3Label">
+            </h4>
+          </div>
+          <div class="modal-body">
+            Esto generará un pago de hospitalización que se podrá cancelar en la sección caja. &nbsp;
+            Por favor ingrese monto a pagar y veterinario. 
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            <button type="button" id="atender" class="btn btn-primary">Hospitalizar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+        <!-- Modal 4-->
+    <div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog modal-admin" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModal4Label"  style="text-align:center">
+            </h4>
+          </div>
+          <div class="modal-body">
+            <div id="preguntaPelu" class="row">
+              <div id="reservarPelu" class="col-md-2 col-md-offset-2">
+                <button type="button" class="btn btn btn-info">Reservar hora</button>
+          </div>
+              <div id="ingPelu" class="col-md-2 col-md-offset-2">
+                <button type="button" class="btn btn-success">Ingresar</button>
+          </div>
+            </div>
+            <div id="texto_pelu" style="display:none">
+              <span class="texto_modal"  >
+              Esto generará un pago de peluquería que se podrá cancelar en la sección caja.
+              </span>
+            </div>
+            <div id="texto_reserva" style="display:none">
+              <span class="texto_modal" >
+                Ingrese la ..... Esto generará una reserva de hora.
+              </span>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div id="botonFinPelu">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+              <button type="button" id="atender" class="btn btn-success">Ingresar</button>
+            </div>
+            <div id="botonFinReserva">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+              <button type="button" id="atender" class="btn btn-primary">Reservar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+        <!-- Modal 5-->
+    <div class="modal fade" id="myModal5" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModal5Label"  style="text-align:center">
+            </h4>
+          </div>
+          <div class="modal-body">
+            Esto generará un pago de hotelería que se podrá cancelar en la sección caja.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            <button type="button" id="atender" class="btn btn-primary">Ingresar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="{% static "dist/js/jquery-1.11.3.min.js" %}"></script>
+    <script src="{% static "dist/js/bootstrap.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "dist/js/modales.js" %}"> </script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+            $('#reservarPelu').on('click', function(event) {        
+            $('#preguntaPelu').hide();
+            $('#myModal4Label').text('Reservar hora de Peluquería')
+            $('#texto_reserva').show();
+            $('#botonFinReserva').show();
+
+            });
+            $('#ingPelu').on('click', function(event) {        
+                 $('#preguntaPelu').hide();
+                 $('#myModal4Label').text('Ingresar a Peluquería')
+                 $('#texto_pelu').show();
+                 $('#botonFinPelu').show();
+            });
+        });
+      </script>
+</html>
